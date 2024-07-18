@@ -45,7 +45,7 @@ class CPUMonitor:
                 json_dic = json.loads(data.decode())
                 return json_dic["cpu_percent"], json_dic["ram_percent"], json_dic["top_processes"]
             except socket.timeout:
-                return -1, -1, []  # Return a specific value if timeout occurs
+                return -1, -1, []  # Return value if timeout occurs
             except Exception as e:
                 print(f"Error receiving message: {e}")
                 return -10, -10, []

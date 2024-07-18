@@ -28,12 +28,13 @@ welcome_scroller = WelcomeScroller('Welcome to Valafar Lab', screen_info, screen
 #gpu graph code
 plt.style.use('dark_background')
 
-gpu_plot00 = GPUPlot()
-gpu_plot01 = GPUPlot()
+num_gpus=2
+gpu_plot00 = GPUPlot(num_gpus)
+gpu_plot01 = GPUPlot(num_gpus)
 
-gpu_monitor00 = GPUMonitor(http_listen=True, port=12345)
+gpu_monitor00 = GPUMonitor(http_listen=True, port=12345, num_gpus=num_gpus)
 gpu_monitor00.start_monitoring()
-gpu_monitor01 = GPUMonitor(http_listen=True, port=12346)
+gpu_monitor01 = GPUMonitor(http_listen=True, port=12346, num_gpus=num_gpus)
 gpu_monitor01.start_monitoring()
 
 def render_cpu_info(screen, cpu_monitor, x, y):
