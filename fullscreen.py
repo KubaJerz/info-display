@@ -58,10 +58,14 @@ def render_cpu_info(screen, cpu_monitor, x, y):
         screen.blit(proc_text, (x, y + y_offset))
         y_offset += 30
 
-cpu_monitor = CPUMonitor(http_listen=True, port=12347)
-cpu_monitor.start_monitoring()
-
+cpu_beast = CPUMonitor(http_listen=True, port=12347)
+cpu_beast.start_monitoring()
 beast = pygame.font.Font(None, 55).render('Beast', True, (99,176,227))
+
+
+
+cpu_beauty = CPUMonitor(http_listen=True, port=12348)
+cpu_beauty.start_monitoring()
 beauty = pygame.font.Font(None, 55).render('Beauty', True, (99,176,227))
 
 
@@ -101,10 +105,10 @@ while running:
             screen.blit(gpu_plot01.surface, (screen_width // 2 + 20, screen_height//2 + 10))
 
     screen.blit(beast, (screen_width//5, welcome_scroller.text_rect.height + 10))
-    render_cpu_info(screen, cpu_monitor, 0 + 20, height_of_welcome_text + 75)
+    render_cpu_info(screen, cpu_beast, 0 + 20, height_of_welcome_text + 75)
 
     screen.blit(beauty, (screen_width // 2 + screen_width//5, welcome_scroller.text_rect.height + 10))
-    render_cpu_info(screen, cpu_monitor, screen_width // 2 + 20, height_of_welcome_text + 75)
+    render_cpu_info(screen, cpu_beauty, screen_width // 2 + 20, height_of_welcome_text + 75)
 
     pygame.display.flip()
     clock.tick(60)  # frame rate = 60
