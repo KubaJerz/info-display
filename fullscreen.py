@@ -59,7 +59,7 @@ def render_cpu_info(screen, cpu_monitor, x, y):
             f"/{username} cpu:{cpu_percent}% mem:{memory_percent}% pid:{pid} {name}",
             True, (255, 255, 255))
         screen.blit(proc_text, (x, y + y_offset))
-        y_offset += 30
+        y_offset += 35
 
 
 cpu_beast = CPUMonitor(http_listen=True, port=12347)
