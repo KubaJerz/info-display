@@ -3,7 +3,7 @@ import pygame
 # Welcome text scroller class
 class WelcomeScroller:
     def __init__(self, welcome_text, screen_info, x_start, y=0, scrollspeed=2, padding=15, fontsize=74, textcolor=(255, 255, 255)):
-        self.text = pygame.font.Font(pygame.font.match_font('ubuntusansmono'), fontsize).render(welcome_text, True, textcolor)
+        self.text = pygame.font.Font(pygame.font.match_font('ubuntumono'), fontsize).render(welcome_text, True, textcolor)
         self.text_rect = self.text.get_rect(left=x_start, top=y)
         self.screen_width = screen_info.current_w
         self.scrollspeed = scrollspeed
