@@ -38,8 +38,8 @@ gpu_monitor01 = GPUMonitor(http_listen=True, port=12346, num_gpus=num_gpus)
 gpu_monitor01.start_monitoring()
 
 def render_cpu_info(screen, cpu_monitor, x, y):
-    fontbig = pygame.font.Font(pygame.font.match_font('ubuntusansmono'), 45)
-    font = pygame.font.Font(pygame.font.match_font('ubuntusansmono'), 25)
+    fontbig = pygame.font.Font(pygame.font.match_font('ubuntumono'), 45)
+    font = pygame.font.Font(pygame.font.match_font('ubuntumono'), 25)
     
     cpu_text = fontbig.render(f"CPU: {cpu_monitor.cpu_percent:.1f}%", True, (99,176,227))
     ram_text = fontbig.render(f"RAM: {cpu_monitor.ram_percent:.1f}%", True, (99,176,227))
