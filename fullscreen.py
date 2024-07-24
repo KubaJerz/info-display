@@ -38,8 +38,8 @@ gpu_monitor01 = GPUMonitor(http_listen=True, port=12346, num_gpus=num_gpus)
 gpu_monitor01.start_monitoring()
 
 def render_cpu_info(screen, cpu_monitor, x, y):
-    fontbig = pygame.font.Font(pygame.font.match_font('ubuntusansmono'), 30)
-    font = pygame.font.Font(pygame.font.match_font('ubuntusansmono'), 20)
+    fontbig = pygame.font.Font(pygame.font.match_font('ubuntusansmono'), 50)
+    font = pygame.font.Font(pygame.font.match_font('ubuntusansmono'), 35)
     
     cpu_text = fontbig.render(f"CPU: {cpu_monitor.cpu_percent:.1f}%", True, (99,176,227))
     ram_text = fontbig.render(f"RAM: {cpu_monitor.ram_percent:.1f}%", True, (99,176,227))
@@ -105,10 +105,10 @@ while running:
             screen.blit(gpu_plot01.surface, (screen_width // 2 + 20, screen_height//2 + 10))
 
     screen.blit(beast, (screen_width//5, welcome_scroller.text_rect.height + 10))
-    render_cpu_info(screen, cpu_beast, 0 + 20, height_of_welcome_text + 75)
+    render_cpu_info(screen, cpu_beast, 0 + 80, height_of_welcome_text + 75)
 
     screen.blit(beauty, (screen_width // 2 + screen_width//5, welcome_scroller.text_rect.height + 10))
-    render_cpu_info(screen, cpu_beauty, screen_width // 2 + 20, height_of_welcome_text + 75)
+    render_cpu_info(screen, cpu_beauty, screen_width // 2 + 80, height_of_welcome_text + 75)
 
     pygame.display.flip()
     clock.tick(60)  # frame rate = 60
