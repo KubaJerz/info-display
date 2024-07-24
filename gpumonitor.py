@@ -1,4 +1,3 @@
-import gpustat
 import time
 import threading
 import json
@@ -18,6 +17,7 @@ class GPUMonitor:
 
     def get_gpu_stats(self):
         if not self.http_listen:
+            import gpustat
             gpu_stats = gpustat.GPUStatCollection.new_query().gpus
             gpu_usage = [gpu.utilization for gpu in gpu_stats[:self.num_gpus]]
             gpu_temp = [gpu.temperature for gpu in gpu_stats[:self.num_gpus]]
