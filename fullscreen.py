@@ -38,8 +38,8 @@ gpu_monitor01 = GPUMonitor(http_listen=True, port=12346, num_gpus=num_gpus)
 gpu_monitor01.start_monitoring()
 
 def render_cpu_info(screen, cpu_monitor, x, y):
-    fontbig = pygame.font.Font(pygame.font.match_font('ubuntusansmono'), 50)
-    font = pygame.font.Font(pygame.font.match_font('ubuntusansmono'), 35)
+    fontbig = pygame.font.Font(pygame.font.match_font('ubuntusansmono'), 45)
+    font = pygame.font.Font(pygame.font.match_font('ubuntusansmono'), 25)
     
     cpu_text = fontbig.render(f"CPU: {cpu_monitor.cpu_percent:.1f}%", True, (99,176,227))
     ram_text = fontbig.render(f"RAM: {cpu_monitor.ram_percent:.1f}%", True, (99,176,227))
@@ -49,14 +49,18 @@ def render_cpu_info(screen, cpu_monitor, x, y):
     
     y_offset = 50
     for proc in cpu_monitor.top_processes:
+        username = proc['username'][:10].ljust(10)  #we truncate  to 10 chars and left justify
+        cpu_percent = f"{proc['cpu_percent']:6.2f}"  # 6 chars wide and 2 decimal places
+        memory_percent = f"{proc['memory_percent']:6.2f}" 
+        pid = f"{proc['pid']:>6}"  # right justify, 6 chars wide
+        name = proc['name'][:25].ljust(25)  #  only 25 chars and left justify
+
         proc_text = font.render(
-            f"/{proc['username'][:10]:<11}"
-            f"cpu:{proc['cpu_percent']:>6.2f}%   mem:{proc['memory_percent']:>6.2f}%"
-            f"  pid:{proc['pid']:>6}"
-            f" {proc['name'][:25]:<25}",
+            f"/{username} cpu:{cpu_percent}% mem:{memory_percent}% pid:{pid} {name}",
             True, (255, 255, 255))
         screen.blit(proc_text, (x, y + y_offset))
         y_offset += 30
+
 
 cpu_beast = CPUMonitor(http_listen=True, port=12347)
 cpu_beast.start_monitoring()
