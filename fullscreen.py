@@ -49,11 +49,11 @@ def render_cpu_info(screen, cpu_monitor, x, y):
     
     y_offset = 50
     for proc in cpu_monitor.top_processes:
-        username = proc['username'][:10].ljust(10)  #we truncate  to 10 chars and left justify
-        cpu_percent = f"{proc['cpu_percent']:4.2f}"  # 6 chars wide and 2 decimal places
-        memory_percent = f"{proc['memory_percent']:4.2f}" 
+        username = proc['username'][:8].ljust(8)  #we truncate  to 8 chars and left justify
+        cpu_percent = f"{proc['cpu_percent']:5.1f}"  # 6 chars wide and 2 decimal places
+        memory_percent = f"{proc['memory_percent']:5.1f}" 
         pid = f"{proc['pid']:>6}"  # right justify, 6 chars wide
-        name = proc['name'][:25].ljust(25)  #  only 25 chars and left justify
+        name = proc['name'][:20].ljust(20)  #  only 25 chars and left justify
 
         proc_text = font.render(
             f"/{username} cpu:{cpu_percent}% mem:{memory_percent}% pid:{pid} {name}",
