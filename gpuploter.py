@@ -5,7 +5,7 @@ import threading
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 
 def create_custom_colormap(num_colors):
-    colors = ['#00FF00', '#FF0000', '#00FFFF', '#FFFF00', '#FF00FF', '#FFA500']
+    colors = ['#00FF00', '#00FFFF', '#FF0000', '#FFFF00', '#FF00FF', '#FFA500']
     
     if num_colors > len(colors):
         cmap = plt.cm.colors.ListedColormap(colors)
