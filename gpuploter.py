@@ -4,6 +4,14 @@ import numpy as np
 import threading
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 
+def create_custom_colormap(num_colors):
+    colors = ['#00FF00', '#FF0000', '#00FFFF', '#FFFF00', '#FF00FF', '#FFA500']
+    
+    if num_colors > len(colors):
+        cmap = plt.cm.colors.ListedColormap(colors)
+        return cmap(np.linspace(0, 1, num_colors))
+    else:
+        return colors[:num_colors]
 
 class GPUPlot:
     def __init__(self, num_gpus, figsize=(8, 4)):
@@ -12,7 +20,8 @@ class GPUPlot:
         self.canvas = FigureCanvasAgg(self.fig)
         self.surface = None
         self.lock = threading.Lock()
-        self.colors = plt.cm.rainbow(np.linspace(0, 1, num_gpus))
+        self.colors = create_custom_colormap(num_gpus)
+
 
     def update(self, gpu_monitor):
         time_series = np.arange(-len(gpu_monitor.gpu_usage_data[0]), 0)
