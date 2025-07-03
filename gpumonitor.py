@@ -32,6 +32,7 @@ class GPUMonitor:
                 json_dic = json.loads(data.decode())
                 return json_dic["gpu_usage"], json_dic["gpu_temp"]
             except socket.timeout:
+                print("time out error")
                 return [-1] * self.num_gpus, [-1] * self.num_gpus
             except Exception as e:
                 print(f"Error receiving message: {e}")
