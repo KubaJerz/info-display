@@ -2,6 +2,7 @@ import os
 import requests
 from dotenv import load_dotenv
 from datetime import datetime, timezone, timedelta
+from dateutil import parser
 
 
 class NEWSAPI:
@@ -62,7 +63,8 @@ class NEWSAPI:
         """Process raw API articles into a more usable format."""
         processed_stories = []
         for story in articles:
-            dt = datetime.fromisoformat(story['publishedAt'][:-1]).replace(tzinfo=timezone.utc)
+            dt = parser.isoparse(story['publishedAt'])
+            # dt = datetime.fromisoformat(story['publishedAt'][:-1]).replace(tzinfo=timezone.utc)
             local_time = dt.astimezone(self.eastern_tz)
             processed_stories.append({
                 "source": story["source"]["name"],
