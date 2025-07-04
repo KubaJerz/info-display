@@ -53,10 +53,11 @@ font_small = pygame.font.Font(pygame.font.match_font('ubuntumono'), 20)
 font_title = pygame.font.Font(None, 55)
 beast_cpu_text = font_title.render('Beast CPU', True, (99, 176, 227))
 
-# Threads
+# Threads - Use mutable running flag
+running_flag = [True]  # Using list to make it mutable for thread access
 gpu_threads = []
 for monitor, plot in zip(gpu_monitors, gpu_plots):
-    thread = threading.Thread(target=gpu_monitoring_thread, args=(monitor, plot, UPDATE_INTERVAL, True))
+    thread = threading.Thread(target=gpu_monitoring_thread, args=(monitor, plot, UPDATE_INTERVAL, running_flag))
     gpu_threads.append(thread)
     thread.start()
 
@@ -94,6 +95,10 @@ def render_gpu_plots():
         (screen_width // 2 + 20, screen_height // 2 + 10)
     ]
 
+    # Update plots if needed (main thread only)
+    for plot in gpu_plots:
+        plot.update_if_needed()
+
     for plot, (x, y) in zip(gpu_plots, plot_positions):
         with plot.lock:
             if plot.surface:
@@ -121,21 +126,29 @@ def render_layout():
 clock = pygame.time.Clock()
 running = True
 
-while running:
-    screen.fill(BACKGROUND_COLOR)
+try:
+    while running:
+        screen.fill(BACKGROUND_COLOR)
 
-    running = handle_events()
-    render_layout()
-    render_gpu_plots()
-    render_cpu_info(screen_width // 16, welcome_scroller.text_rect.height + 55)
+        running = handle_events()
+        render_layout()
+        render_gpu_plots()
+        render_cpu_info(screen_width // 16, welcome_scroller.text_rect.height + 55)
 
-    screen.blit(beast_cpu_text, (screen_width // 5, welcome_scroller.text_rect.height + 10))
-    pygame.display.flip()
-    clock.tick(60)
+        screen.blit(beast_cpu_text, (screen_width // 5, welcome_scroller.text_rect.height + 10))
+        pygame.display.flip()
+        clock.tick(60)
 
-# Cleanup
-for thread in gpu_threads:
-    thread.join()
+finally:
+    # Cleanup
+    running_flag[0] = False  # Signal threads to stop
+    
+    for thread in gpu_threads:
+        thread.join()
+    
+    # Clean up temporary files
+    for plot in gpu_plots:
+        plot.cleanup()
 
 pygame.quit()
 sys.exit()
